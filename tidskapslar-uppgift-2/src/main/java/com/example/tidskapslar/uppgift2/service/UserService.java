@@ -1,6 +1,5 @@
 package com.example.tidskapslar.uppgift2.service;
 
-
 import com.example.tidskapslar.uppgift2.entity.User;
 import com.example.tidskapslar.uppgift2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +31,4 @@ public class UserService {
     public boolean checkPassword(User user, String rawPassword) {
         return passwordEncoder.matches(rawPassword, user.getHashedPassword());
     }
-
-    public Optional<User> findById(Long userId) {
-        return userRepository.findById(userId);
-    }
-
-
 }

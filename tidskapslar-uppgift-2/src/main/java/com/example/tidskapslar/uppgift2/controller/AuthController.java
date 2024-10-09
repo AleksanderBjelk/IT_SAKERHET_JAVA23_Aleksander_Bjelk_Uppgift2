@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     private static final Logger logger = Logger.getLogger(AuthController.class.getName());
@@ -23,34 +24,48 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    // Autentisera användare och generera JWT
-    @PostMapping("/authenticate")
-    public Map<String, String> authenticate(@RequestBody Map<String, Object> credentials) throws JOSEException {
-        String email = (String) credentials.get("email");
-        String password = (String) credentials.get("password");
+    //registreara användare
+    @PostMapping("/register")
+    public String registerUser(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String password = payload.get("password");
 
-        logger.info("Received login request for email: " + email);  // Logga när förfrågan tas emot
+        Optional<User> existingUser = userService.findByEmail(email);
+        if (existingUser.isPresent()) {
+            return "Email already in use.";
+        }
+
+        userService.registerUser(email, password);
+        return "User registered successfully.";
+    }
+
+    //inloggning och fixat JWT
+    @PostMapping("/login")
+    public Map<String, String> login(@RequestBody Map<String, String> credentials) throws JOSEException {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+
+        logger.info("Received login request for email: " + email);
 
         Optional<User> user = userService.findByEmail(email);
         if (user.isPresent() && userService.checkPassword(user.get(), password)) {
-            logger.info("Login successful for email: " + email);  // Logga om inloggning lyckas
+            logger.info("Login successful for email: " + email);
 
-            // Generera JWT-token om inloggningen lyckas
             JWSSigner signer = new MACSigner(SECRET);
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(email)
                     .issuer("https://yourapp.com")
-                    .expirationTime(new Date(new Date().getTime() + 60 * 1000 * 60))  // Token giltig i 1 timme
+                    .expirationTime(new Date(new Date().getTime() + 60 * 60 * 1000))
                     .build();
 
             SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
             signedJWT.sign(signer);
             String jwt = signedJWT.serialize();
 
-            logger.info("JWT generated for email: " + email);  // Logga att JWT skapades
-            return Map.of("token", jwt);
+            logger.info("JWT generated for email: " + email);
+            return Map.of("token", jwt, "userId", String.valueOf(user.get().getId()));  //returnerar token och userId
         } else {
-            logger.warning("Invalid credentials for email: " + email);  // Logga om inloggningen misslyckas
+            logger.warning("Invalid credentials for email: " + email);
             return Map.of("error", "Invalid credentials");
         }
     }

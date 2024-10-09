@@ -5,32 +5,38 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "messages")
 public class Message {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "capsule_id")
-    private Capsule capsule;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String encryptedMessage;
 
-    public void setContent(String content) {
-        this.encryptedMessage = content;
-    }
-    public String getContent() {
+    @Column(nullable = false)
+    private String secretKey;
+
+    public String getEncryptedMessage() {
         return encryptedMessage;
     }
-
-    public void setCapsule(Capsule capsule) {
-        this.capsule = capsule;
+    public void setEncryptedMessage(String encryptedMessage) {
+        this.encryptedMessage = encryptedMessage;
     }
-    public Capsule getCapsule() {
-        return capsule;
+    public String getSecretKey() {
+        return secretKey;
+    }
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+    public Long getId() {
+        return id;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    // Getters and Setters
 }
