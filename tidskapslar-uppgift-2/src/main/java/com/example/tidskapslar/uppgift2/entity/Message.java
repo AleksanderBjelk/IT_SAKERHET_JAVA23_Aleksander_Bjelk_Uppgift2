@@ -17,5 +17,20 @@ public class Message {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String encryptedMessage;
 
+    public void setContent(String content) {
+        this.encryptedMessage = content;
+    }
+    public String getContent() {
+        return encryptedMessage;
+    }
+
+    public void setCapsule(Capsule capsule) {
+        this.capsule = capsule;
+    }
+    public Capsule getCapsule() {
+        return capsule;
+    }
+
+
     // Getters and Setters
 }
