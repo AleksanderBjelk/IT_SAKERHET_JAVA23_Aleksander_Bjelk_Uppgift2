@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import AuthService from "./AuthService";
+import { useNavigate } from "react-router-dom";
+import "./CreateMessageComponent.css";  
+import logo from "./asstes/Grit-Academy-logo.png"
 
 const CreateMessageComponent = () => {
   const [message, setMessage] = useState("");
   const currentUser = AuthService.getCurrentUser();
+  const navigate = useNavigate();
 
   const handleCreateMessage = (e) => {
     e.preventDefault();
@@ -26,7 +30,8 @@ const CreateMessageComponent = () => {
   };
 
   return (
-    <div>
+    <div className="main">
+    <div className="create-message-container">
       <h2>Skapa ett nytt meddelande</h2>
       <form onSubmit={handleCreateMessage}>
         <div>
@@ -38,7 +43,11 @@ const CreateMessageComponent = () => {
           />
         </div>
         <button type="submit">Skapa</button>
+        <button onClick={() => navigate('/view-messages')} >Se dina skapade meddelandenn</button>
+        <button onClick={() => navigate('/message-options')} >Tillbaka till meddelande val</button>
       </form>
+      <img src={logo} alt="Grit Academy Logo" className="logo-image" />
+    </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:8080"; 
 
-//registrera en ny användare
+// Register a new user
 const register = (email, password) => {
   return axios.post(`${API_URL}/auth/register`, {
     email: email,
@@ -18,14 +18,18 @@ const register = (email, password) => {
   });
 };
 
+// Login user with email and password
 const login = (email, password) => {
   return axios.post(`${API_URL}/auth/login`, {
     email: email,
     password: password
   })
   .then(response => {
+    // Only store the token if the response has one
     if (response.data.token) {
-      localStorage.setItem("user", JSON.stringify(response.data)); //spara token och userId i localStorage
+      localStorage.setItem("user", JSON.stringify(response.data));
+    } else {
+      throw new Error("Invalid credentials");
     }
     return response.data;
   })
@@ -34,17 +38,20 @@ const login = (email, password) => {
   });
 };
 
+// Logout user and clear session
 const logout = () => {
   localStorage.removeItem("user");
 };
 
+// Get the current user from localStorage
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  const user = localStorage.getItem("user");
+  return user ? JSON.parse(user) : null;
 };
 
 export default {
   register,
   login,
   logout,
-  getCurrentUser
+  getCurrentUser,
 };

@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";  
 import AuthService from "./AuthService";  
+import "./RegisterComponent.css";  
+import logo from "./asstes/Grit-Academy-logo.png"
 
 const RegisterComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");  // Ny state för att hantera felmeddelanden
   const navigate = useNavigate();  
 
   const handleRegister = (e) => {
     e.preventDefault();
 
+    // Kolla om fälten är tomma
+    if (!email || !password) {
+      setErrorMessage("Vänligen fyll i både e-post och lösenord.");
+      return;  // Stoppa om fälten är tomma
+    }
+
     AuthService.register(email, password)
-      .then(() => {
-        setMessage("Användaren har registrerats! Du omdirigeras till inloggning.");
-        setTimeout(() => {
-          navigate("/login");  
-        }, 2000);  //vänta 2 sekunder innan omdirigering
+      .then((responseMessage) => {
+        // Sätt meddelandet från response.data istället för hårdkodade meddelandet
+        setMessage(responseMessage); 
+        setErrorMessage("");  // Rensa felmeddelandet vid lyckad registrering
       })
       .catch(error => {
         setMessage(error.message);
@@ -24,7 +32,9 @@ const RegisterComponent = () => {
   };
 
   return (
-    <div>
+    <div className="main">
+    <div className="register-container">
+      <h2>Registrera</h2>
       <form onSubmit={handleRegister}>
         <div>
           <label>Email</label>
@@ -42,10 +52,19 @@ const RegisterComponent = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">Registera diit nya konto</button>
       </form>
 
-      {message && <div>{message}</div>}
+      {/* Visa felmeddelanden om fälten är tomma */}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+      {/* Visa meddelande efter registrering */}
+      {message && <div className="message">{message}</div>}
+
+      {/* Knapp för att gå till inloggning, visas alltid */}
+      <button onClick={() => navigate("/login")}>Gå till inloggning</button>
+      <img src={logo} alt="Grit Academy Logo" className="logo-image" />
+    </div>
     </div>
   );
 };

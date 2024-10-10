@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "./AuthService";  
+import "./LoginComponent.css"
+import logo from "./asstes/Grit-Academy-logo.png"
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
@@ -11,9 +13,14 @@ const LoginComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      setMessage("Vänligen ange både email och lösenord.");  
+      return;
+    }
+
     AuthService.login(email, password)
       .then(() => {
-        navigate("/message-options");  // Navigate to the new page after login
+        navigate("/message-options");  
       })
       .catch(error => {
         setMessage(error.message);
@@ -21,7 +28,9 @@ const LoginComponent = () => {
   };
 
   return (
-    <div>
+    <div className="main">
+    <div className="login-container">
+      <h2>Logga in för att se och skapa meddelanden</h2>
       <form onSubmit={handleLogin}>
         <div>
           <label>Email</label>
@@ -39,14 +48,16 @@ const LoginComponent = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Logga in</button>
       </form>
 
-      {message && <div>{message}</div>}
+      {message && <div className="message">{message}</div>}
 
-      <div>
+      <div className="register-link">
         <p>Har du inget konto? <button onClick={() => navigate("/register")}>Registrera dig här</button></p>
       </div>
+    <img src={logo} alt="Grit Academy Logo" className="logo-image" />
+    </div>
     </div>
   );
 };
