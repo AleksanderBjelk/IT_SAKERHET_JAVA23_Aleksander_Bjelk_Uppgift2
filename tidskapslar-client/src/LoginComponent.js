@@ -4,6 +4,8 @@ import AuthService from "./AuthService";
 import "./LoginComponent.css"
 import logo from "./asstes/Grit-Academy-logo.png"
 
+
+//sätter inloggning från användare
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

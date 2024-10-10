@@ -1,0 +1,44 @@
+.message-options-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 50px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.message-options-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.message-options-container button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 17px;
+    background-color: #aa8713;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.message-options-container button:hover {
+    background-color: #000000;
+}
+
+.logo-image {
+    display: block;
+    margin: 20px auto;
+    width: 350px;
+    height: auto;
+}
+.main {
+    background-color: black;
+    padding-bottom: 310px;
+    padding-top: 100px;
+}

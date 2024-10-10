@@ -1,0 +1,59 @@
+.create-message-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.create-message-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.create-message-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.create-message-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.create-message-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #aa8713;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 17px;
+}
+
+.create-message-container button:hover {
+    background-color: #000000;
+}
+
+.logo-image {
+    display: block;
+    margin: 20px auto;
+    width: 350px;
+    height: auto;
+}
+.main {
+    background-color: black;
+    padding-bottom: 310px;
+    padding-top: 100px;
+}
