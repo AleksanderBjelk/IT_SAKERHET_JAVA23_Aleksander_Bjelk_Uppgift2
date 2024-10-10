@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // Importera useNavigate för navigering
-import AuthService from "./AuthService";  // Justera vägen till AuthService om det behövs
+import { useNavigate } from "react-router-dom";  
+import AuthService from "./AuthService";  
 
 const RegisterComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();  // Använd useNavigate för att hantera navigering
+  const navigate = useNavigate();  
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -15,8 +15,8 @@ const RegisterComponent = () => {
       .then(() => {
         setMessage("Användaren har registrerats! Du omdirigeras till inloggning.");
         setTimeout(() => {
-          navigate("/login");  // Omdirigera till inloggningssidan efter registrering
-        }, 2000);  // Vänta 2 sekunder innan omdirigering
+          navigate("/login");  
+        }, 2000);  //vänta 2 sekunder innan omdirigering
       })
       .catch(error => {
         setMessage(error.message);

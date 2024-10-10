@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_URL = "http://localhost:8080"; // Din Spring Boot-backend
+const API_URL = "http://localhost:8080"; 
 
-// Registrera en ny användare
+//registrera en ny användare
 const register = (email, password) => {
-  return axios.post(`${API_URL}/users/register`, {
+  return axios.post(`${API_URL}/auth/register`, {
     email: email,
     password: password
   })
@@ -19,13 +19,13 @@ const register = (email, password) => {
 };
 
 const login = (email, password) => {
-  return axios.post(`${API_URL}/authenticate`, {
+  return axios.post(`${API_URL}/auth/login`, {
     email: email,
     password: password
   })
   .then(response => {
     if (response.data.token) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("user", JSON.stringify(response.data)); //spara token och userId i localStorage
     }
     return response.data;
   })

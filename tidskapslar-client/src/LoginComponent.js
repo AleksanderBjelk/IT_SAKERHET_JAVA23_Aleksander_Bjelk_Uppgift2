@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // Importera useNavigate för navigering
-import AuthService from "./AuthService";  // Justera vägen till AuthService om det behövs
+import { useNavigate } from "react-router-dom";
+import AuthService from "./AuthService";  
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();  // Använd useNavigate för att hantera navigering
+  const navigate = useNavigate();  
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     AuthService.login(email, password)
       .then(() => {
-        navigate("/profile");  // Navigera till profilsidan efter lyckad inloggning
+        navigate("/profile");  
       })
       .catch(error => {
         setMessage(error.message);
@@ -44,7 +44,6 @@ const LoginComponent = () => {
 
       {message && <div>{message}</div>}
 
-      {/* Lägg till knapp för att gå till registreringssidan */}
       <div>
         <p>Har du inget konto? <button onClick={() => navigate("/register")}>Registrera dig här</button></p>
       </div>

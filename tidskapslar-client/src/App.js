@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginComponent from './LoginComponent';
-import RegisterComponent from './RegisterComponent';  // Lägg till RegisterComponent
+import RegisterComponent from './RegisterComponent';
 import AuthService from './AuthService';
 
 const PrivateRoute = ({ children }) => {
@@ -10,7 +10,8 @@ const PrivateRoute = ({ children }) => {
 };
 
 const Profile = () => {
-  return <h2>Detta är din profil, endast åtkomlig efter inloggning</h2>;
+  const user = AuthService.getCurrentUser();
+  return <h2>Välkommen {user?.email}, detta är din profil.</h2>;
 };
 
 function App() {
@@ -20,15 +21,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginComponent />} />
-          <Route path="/register" element={<RegisterComponent />} />  {/* Lägg till register-rutt */}
-          
+          <Route path="/register" element={<RegisterComponent />} />
           <Route 
             path="/profile" 
             element={
               <PrivateRoute>
                 <Profile />
               </PrivateRoute>
-            }
+            } 
           />
         </Routes>
       </div>
