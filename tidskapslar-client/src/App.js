@@ -2,16 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginComponent from './LoginComponent';
 import RegisterComponent from './RegisterComponent';
+import ViewMessageComponent from './ViewMessageComponent';  // Create this component
+import CreateMessageComponent from './CreateMessageComponent';  // Create this component
+import MessageOptionsComponent from './MessageOptionsComponent';
 import AuthService from './AuthService';
 
 const PrivateRoute = ({ children }) => {
   const currentUser = AuthService.getCurrentUser();
   return currentUser ? children : <Navigate to="/login" />;
-};
-
-const Profile = () => {
-  const user = AuthService.getCurrentUser();
-  return <h2>Välkommen {user?.email}, detta är din profil.</h2>;
 };
 
 function App() {
@@ -22,13 +20,29 @@ function App() {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginComponent />} />
           <Route path="/register" element={<RegisterComponent />} />
-          <Route 
-            path="/profile" 
+          <Route
+            path="/message-options"
             element={
               <PrivateRoute>
-                <Profile />
+                <MessageOptionsComponent />
               </PrivateRoute>
-            } 
+            }
+          />
+          <Route
+            path="/view-messages"
+            element={
+              <PrivateRoute>
+                <ViewMessageComponent />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/create-message"
+            element={
+              <PrivateRoute>
+                <CreateMessageComponent />
+              </PrivateRoute>
+            }
           />
         </Routes>
       </div>

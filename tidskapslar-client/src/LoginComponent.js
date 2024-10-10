@@ -13,7 +13,7 @@ const LoginComponent = () => {
 
     AuthService.login(email, password)
       .then(() => {
-        navigate("/profile");  
+        navigate("/message-options");  // Navigate to the new page after login
       })
       .catch(error => {
         setMessage(error.message);
